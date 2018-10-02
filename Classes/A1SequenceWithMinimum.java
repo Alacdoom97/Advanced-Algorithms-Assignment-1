@@ -1,7 +1,5 @@
 package assignment1AADS.assignment1;
 
-
-
 public interface A1SequenceWithMinimum {
         public void insertRight(Integer value); 
 	public Integer removeRight();
