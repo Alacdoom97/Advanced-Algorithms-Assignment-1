@@ -31,8 +31,7 @@ public class MyIntegerBST implements A1Tree {
 					parent.right = addNode;
 				}
 			}
-		}
-		else {
+		} else {
 			System.err.println("You have inserted a duplicate integer, please insert another integer.");
 		}
 
@@ -40,8 +39,12 @@ public class MyIntegerBST implements A1Tree {
 
 	@Override
 	public Integer mostSimilarValue(Integer value) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (containsNode(value)) {
+			return value;
+		} else {
+			return searchDifference(root, value);	
+		}
 	}
 
 	@Override
@@ -69,6 +72,34 @@ public class MyIntegerBST implements A1Tree {
 			return true;
 		else
 			return false;
+	}
+
+	public Integer searchDifference(Node root, Integer key) {
+		Integer min = Integer.MAX_VALUE;
+		Integer difference;
+		Node closestNode = null;
+		Node temp = root;
+		while (root != null) {
+			if (key > temp.key) {
+				difference = Math.abs(temp.key - key);
+				if (difference < min) {
+					min = difference;
+					closestNode = temp;
+				}
+				temp = temp.right;
+			} else if (key < temp.key) {
+				difference = Math.abs(temp.key - key);
+				if(difference < min) {
+					min = difference;
+					closestNode = temp;
+				}
+				temp = temp.left;
+			} else {
+				return temp.key;
+			}
+		}
+		return null;
+
 	}
 
 	private class Node {
