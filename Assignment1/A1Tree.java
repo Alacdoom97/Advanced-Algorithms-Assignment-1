@@ -1,4 +1,4 @@
-package assignment1AADS.assignment1;
+package Assignment1;
 
 public interface A1Tree {
 	public void insert(Integer value);
