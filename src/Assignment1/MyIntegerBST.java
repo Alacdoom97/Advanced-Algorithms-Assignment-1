@@ -5,36 +5,22 @@ public class MyIntegerBST implements A1Tree {
 	private Node root = null;
 
 	public MyIntegerBST() {
-		this.root = null;
 	}
 
 	@Override
 	public void insert(Integer value) {
-		Node addNode = new Node(value);
-
-		if (root == null) {
-			root = addNode;
-			return;
-		} else if (!containsNode(value)) {
-			Node now = root;
-			Node parent = null;
-			while (true) {
-				parent = now;
-				if (value < now.key) {
-				}
-				now = now.left;
-				if (now == null) {
-					parent.left = addNode;
-					return;
-
-				} else if (value > now.key) {
-					parent.right = addNode;
-				}
-			}
-		} else {
-			System.err.println("You have inserted a duplicate integer, please insert another integer.");
+		
+		if(value == null) {
+			System.err.println("Error, there is no value given!");
 		}
-
+		else if(!containsNode(value)) {
+			insertElement(root, value);
+		}
+		else {
+			System.err.println("Error, duplicate value detected! Try Again!");
+		}
+		
+		
 	}
 
 	@Override
@@ -49,7 +35,7 @@ public class MyIntegerBST implements A1Tree {
 
 	@Override
 	public void printByLevels() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -58,9 +44,9 @@ public class MyIntegerBST implements A1Tree {
 			return null;
 		} else {
 			if (searchNode.key > key) {
-				searchForNode(searchNode.left, key);
+				return searchForNode(searchNode.left, key);
 			} else if (searchNode.key < key) {
-				searchForNode(searchNode.right, key);
+				return searchForNode(searchNode.right, key);
 			}
 			return searchNode;
 		}
@@ -68,10 +54,15 @@ public class MyIntegerBST implements A1Tree {
 	}
 
 	public boolean containsNode(Integer key) {
-		if (searchForNode(root, key).key == key)
-			return true;
-		else
+		if (searchForNode(root, key) == null) {
 			return false;
+		}
+		else if (searchForNode(root, key).key == key) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public Integer searchDifference(Node root, Integer key) {
@@ -80,26 +71,71 @@ public class MyIntegerBST implements A1Tree {
 		Node closestNode = null;
 		Node temp = root;
 		while (root != null) {
-			if (key > temp.key) {
-				difference = Math.abs(temp.key - key);
+			if (key > root.key) {
+				difference = Math.abs(root.key - key);
 				if (difference < min) {
 					min = difference;
-					closestNode = temp;
+					closestNode = root;
 				}
-				temp = temp.right;
-			} else if (key < temp.key) {
-				difference = Math.abs(temp.key - key);
+				if(root.right == null) {
+					return root.key;
+				} else {
+				root = root.right;
+				}
+			} else if (key < root.key) {
+				difference = Math.abs(root.key - key);
 				if(difference < min) {
 					min = difference;
-					closestNode = temp;
+					closestNode = root;
 				}
-				temp = temp.left;
+				if (root.left == null) {
+					return root.key;
+				} else {
+				root = root.left;
+				}
+				
 			} else {
-				return temp.key;
+				return root.key;
 			}
 		}
 		return null;
 
+	}
+	
+	public int heightOfBST(Node rootLevel) {
+		if (rootLevel == null) {
+			return -1;
+		}
+		
+		int leftSide = 0;
+		int rightSide = 0;
+		
+		if(rootLevel.left != null) {
+			leftSide = heightOfBST(rootLevel.left);
+		}
+		if(rootLevel.right != null) {
+			rightSide = heightOfBST(rootLevel.right);
+		}
+		if (leftSide > rightSide) {
+			return leftSide + 1;
+		}
+		else {
+			return rightSide + 1;
+		}
+	}
+	
+	public void insertElement(Node n, Integer key) {
+		if(n == null) {
+            n = new Node(key);
+		}
+        else if(n.key > key) {
+        	
+            insertElement(n.right, key);
+        }
+        else if(n.key < key) {
+        	
+            insertElement(n.left, key);
+        }
 	}
 
 	private class Node {
