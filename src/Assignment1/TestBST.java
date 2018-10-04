@@ -11,10 +11,21 @@ public class TestBST {
 		bst.insert(4);
 		bst.insert(9);
 		bst.insert(25);
+		bst.insert(39);
+		bst.insert(42);
+		bst.insert(2);
 		bst.insert(8);
-		bst.insert(20);
-		System.out.println(bst.mostSimilarValue(24));
-
+		bst.insert(15);
+		bst.insert(16);
+		bst.insert(99);
+		bst.insert(13);
+		bst.insert(29);
+		bst.insert(55);
+		bst.insert(65);
+		bst.insert(49);
+		bst.insert(81);
+		bst.insert(999);
+		bst.printByLevels();
 	}
 
 }

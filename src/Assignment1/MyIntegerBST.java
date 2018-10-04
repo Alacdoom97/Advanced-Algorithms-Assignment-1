@@ -14,13 +14,17 @@ public class MyIntegerBST implements A1Tree {
 			System.err.println("Error, there is no value given!");
 		}
 		else if(!containsNode(value)) {
-			insertElement(root, value);
+			this.root = insertElement(this.root, value);
 		}
 		else {
 			System.err.println("Error, duplicate value detected! Try Again!");
 		}
 		
 		
+	}
+	
+	public Node getRoot() {
+		return root;
 	}
 
 	@Override
@@ -35,8 +39,28 @@ public class MyIntegerBST implements A1Tree {
 
 	@Override
 	public void printByLevels() {
+		int height = heightOfBST(root);
 		
+		for(int i = 1; i <= height; i++) {
+			System.out.print("Depth " + (i-1) + ": ");
+			printOneLevel(root, i);
+			System.out.println("");
+		}
 
+	}
+	
+	public void printOneLevel(Node n, int depth) {
+		if (n == null ) {
+			return;
+		}
+		if(depth == 1) {
+			System.out.print(n.key);
+			System.out.print(" ");
+		}
+		else if(depth > 1) {
+			printOneLevel(n.left, depth - 1);
+			printOneLevel(n.right, depth - 1);
+		}
 	}
 
 	public Node searchForNode(Node searchNode, Integer key) {
@@ -78,7 +102,7 @@ public class MyIntegerBST implements A1Tree {
 					closestNode = root;
 				}
 				if(root.right == null) {
-					return root.key;
+					return closestNode.key;
 				} else {
 				root = root.right;
 				}
@@ -89,7 +113,7 @@ public class MyIntegerBST implements A1Tree {
 					closestNode = root;
 				}
 				if (root.left == null) {
-					return root.key;
+					return closestNode.key;
 				} else {
 				root = root.left;
 				}
@@ -124,18 +148,19 @@ public class MyIntegerBST implements A1Tree {
 		}
 	}
 	
-	public void insertElement(Node n, Integer key) {
+	public Node insertElement(Node n, Integer key) {
 		if(n == null) {
             n = new Node(key);
 		}
         else if(n.key > key) {
         	
-            insertElement(n.right, key);
+           n.left = insertElement(n.left, key);
         }
         else if(n.key < key) {
         	
-            insertElement(n.left, key);
+           n.right = insertElement(n.right, key);
         }
+		return n;
 	}
 
 	private class Node {
