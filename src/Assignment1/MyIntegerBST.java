@@ -123,7 +123,6 @@ public class MyIntegerBST implements A1Tree {
 			}
 		}
 		return null;
-
 	}
 	
 	public int heightOfBST(Node rootLevel) {
